@@ -1,0 +1,33 @@
+body {
+  box-sizing: border-box;
+  margin: 1rem 8rem;
+  padding: 0;
+  background-color: #023047;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+}
+
+header button {
+  padding: 0.7rem;
+  font-size: 1.6rem;
+  font-weight: 530;
+  border-radius: 16px;
+  color: white;
+  background-color: #023047;
+  border: solid 2px #219EBC;
+  border-radius: 3rem;
+}
+
+.content {
+  border-top: solid 4px #219EBC;
+  width: 100%;
+  margin-top: 1rem;
+}
