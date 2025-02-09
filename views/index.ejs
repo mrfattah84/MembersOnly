@@ -6,11 +6,17 @@
     <title>membersOnly</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
-     <body>
+  <body>
     <header>
-     <img src="logoipsum-288.svg" alt="logo">
-     <button>Sign in</button>
+      <img src="logoipsum-288.svg" alt="logo" />
+      <a href="/signup"><button>Sign in</button></a>
     </header>
-    <div class="content"></div>
+    <div class="content">
+      <% if (locals.user) {%>
+      <h1>WELCOME BACK <%= user.uname %></h1>
+      <% } else { %>
+      <h1>please log in</h1>
+      <%}%>
+    </div>
   </body>
 </html>
