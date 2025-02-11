@@ -68,7 +68,8 @@ const logInRouter = require('./routes/logInRoute');
 app.use('/login', logInRouter);
 
 const controller = require('./controllers/mainController');
-app.use('/logout', controller.logout)
+app.use('/logout', controller.logout);
+app.post('/member', controller.member)
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');

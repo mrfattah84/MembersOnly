@@ -59,4 +59,20 @@ module.exports = {
     }
     next();
   },
+
+  member: async function (req, res, next) {
+    if (req.body.code === 'meow') {
+      pool.query('UPDATE users SET status = 1 WHERE uname = $1', [
+        req.user.uname,
+      ]);
+      res.redirect('/');
+    } else if (req.body.code === 'admin') {
+      pool.query('UPDATE users SET status = 2 WHERE uname = $1', [
+        req.user.uname,
+      ]);
+      res.redirect('/');
+    } else {
+      res.redirect('/');
+    }
+  },
 };

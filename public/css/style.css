@@ -31,3 +31,8 @@ header button {
   width: 100%;
   margin-top: 1rem;
 }
+
+dialog{
+  background-color: #023047;
+  border-radius: 20px;
+}
