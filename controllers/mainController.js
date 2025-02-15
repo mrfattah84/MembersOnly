@@ -1,10 +1,29 @@
 const pool = require('./../models/pool');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const { message } = require('prompt');
 
 module.exports = {
-  index: function (req, res) {
-    res.render('index', { user: req.user });
+  index: async function (req, res) {
+    if (!req.user || (req.user.status || 0) == 0) {
+      const messages = await pool.query(
+        'SELECT id, title, text, img FROM messages'
+      );
+      console.log(messages.rows);
+      res.render('index', {
+        user: req.user,
+        messages,
+      });
+    } else {
+      const messages = await pool.query(
+        'SELECT messages.id, title, text, img, timestamp, fname, lname  FROM messages INNER JOIN users ON messages.author_id = users.id;'
+      );
+      console.log(messages.rows);
+      res.render('index', {
+        user: req.user,
+        messages,
+      });
+    }
   },
 
   renderSignUp: function (req, res) {
@@ -73,6 +92,25 @@ module.exports = {
       res.redirect('/');
     } else {
       res.redirect('/');
+    }
+  },
+
+  message: async function (req, res, next) {
+    try {
+      await pool.query(
+        'insert into messages (title, text, img, timestamp, author_id) values ($1, $2, $3, $4, $5)',
+        [
+          req.body.title,
+          req.body.text,
+          req.body.img,
+          new Date().toISOString(),
+          req.user.id,
+        ]
+      );
+      res.redirect('/');
+    } catch (error) {
+      console.error(error);
+      next(error);
     }
   },
 };

@@ -6,13 +6,14 @@
     <title>membersOnly</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
+
   <body>
     <header>
       <img src="logoipsum-288.svg" alt="logo" />
       <% if (locals.user) {%>
       <div>
         <a href="/logout"><button>log out</button></a>
-        <button onclick="document.querySelector('dialog').showModal()">
+        <button onclick="document.querySelector('.secret').showModal()">
           Become a member
         </button>
       </div>
@@ -21,21 +22,61 @@
       <%}%>
     </header>
     <div class="content">
-      <% if (locals.user) {%>
-      <h1>WELCOME BACK <%= user.uname %></h1>
-      <% } else { %>
-      <h1>please log in</h1>
+      <% for (let index = 0; index < locals.messages.rows.length; index++){%>
+      <%const element = locals.messages.rows[index];%>
+      <div class="card">
+        <a href="/delete?id=<%= element.id %>">X</a>
+        <div class="text">
+          <h2><%= element.title %></h2>
+          <p><%= element.text%></p>
+        </div>
+        <% if (locals.user && (locals.user.status || 0) > 0 ) { %>
+        <div class="ditails">
+          <div class="author" id="<%= element.id  %>">
+            <%= element.fname+ ' '+element.lname %>
+          </div>
+          <div><%= new Date(element.timestamp).toLocaleString() %></div>
+        </div>
+        <% } %>
+      </div>
       <%}%>
     </div>
-    <dialog>
+    <% if (locals.user) {%>
+    <button
+      class="newMessage"
+      onclick="document.querySelector('.message').showModal()"
+    >
+      New Message
+    </button>
+    <%}%>
+
+    <dialog class="secret">
       <form
         action="/member"
         method="post"
-        onsubmit="document.querySelector('dialog').close()"
+        onsubmit="document.querySelector('.secret').close()"
       >
         <h2 style="margin-top: 0">Do you know the secret key?!</h2>
         <input type="text" name="code" id="code" />
         <button type="submit">TEST ME!!</button>
+      </form>
+    </dialog>
+    <dialog class="message">
+      <form action="/message" method="post">
+        <h2>new message</h2>
+        <div>
+          <h3>title:</h3>
+          <input type="text" name="title" id="title" />
+        </div>
+        <div>
+          <h3>text:</h3>
+          <textarea style="height: 100px" name="text" id="text"></textarea>
+        </div>
+        <div>
+          <h3>image:</h3>
+          <input type="file" name="img" id="img" />
+        </div>
+        <button type="submit">Publish</button>
       </form>
     </dialog>
   </body>
