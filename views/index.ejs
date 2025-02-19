@@ -25,7 +25,9 @@
       <% for (let index = 0; index < locals.messages.rows.length; index++){%>
       <%const element = locals.messages.rows[index];%>
       <div class="card">
-        <a href="/delete?id=<%= element.id %>">X</a>
+        <% if (locals.user && (locals.user.status || 0) > 1 ) { %>
+        <a class="del" href="/delete?id=<%= element.id %>">X</a>
+        <% } %>
         <div class="text">
           <h2><%= element.title %></h2>
           <p><%= element.text%></p>

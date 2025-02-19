@@ -71,6 +71,7 @@ const controller = require('./controllers/mainController');
 app.use('/logout', controller.logout);
 app.post('/member', controller.member);
 app.post('/message', controller.message);
+app.get('/delete', controller.delete)
 
 
 app.listen(3000, () => {

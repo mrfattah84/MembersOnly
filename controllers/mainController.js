@@ -113,4 +113,15 @@ module.exports = {
       next(error);
     }
   },
+
+  delete: async function (req, res, next) {
+    try {
+      const id = parseInt(req.url.slice(-1));
+      await pool.query('DELETE FROM messages WHERE id=$1', [id]);
+      res.redirect('/');
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  },
 };

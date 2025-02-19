@@ -64,6 +64,7 @@ dialog {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .card p {
@@ -72,4 +73,17 @@ dialog {
 
 .card .ditails {
   margin-top: auto;
+}
+
+.del {
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  text-decoration: none;
+  background-color: red;
+  color: black;
+  padding: 2px 5px;
+  font-size: small;
+  font-weight: 900;
+  border-radius: 100%;
 }
